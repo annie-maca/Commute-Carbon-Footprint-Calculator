@@ -1,0 +1,140 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg-primary: #0f0f12;
+  --bg-card: #1a1a20;
+  --bg-card-hover: #22222a;
+  --accent: #e85d4c;
+  --accent-hover: #f07a6b;
+  --accent-muted: rgba(232, 93, 76, 0.2);
+  --text-primary: #f4f4f5;
+  --text-secondary: #a1a1aa;
+  --border: #27272a;
+  --radius: 16px;
+  --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #04314b 0%, #092b44 50%, #0b3954 100%);
+  color: #ffffff;
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.timer-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 3rem;
+  text-align: center;
+  box-shadow: var(--shadow);
+  min-width: 320px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+}
+
+.timer-display {
+  font-variant-numeric: tabular-nums;
+  font-size: 4.5rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  margin-bottom: 2.5rem;
+  color: var(--text-primary);
+}
+
+.timer-display .separator {
+  color: var(--accent);
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-start {
+  background: var(--accent);
+  color: white;
+}
+
+.btn-start:hover {
+  background: var(--accent-hover);
+}
+
+.btn-start.running {
+  background: var(--accent-muted);
+  color: var(--accent);
+  pointer-events: none;
+}
+
+.btn-reset {
+  background: var(--border);
+  color: var(--text-primary);
+}
+
+.btn-reset:hover {
+  background: #3f3f46;
+}
+
+.nav-link {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.nav-link a {
+  color: var(--text-secondary);
+  text-decoration: none;
+}
+
+.nav-link a:hover {
+  color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  .timer-container {
+    padding: 2rem;
+  }
+
+  .timer-display {
+    font-size: 3.5rem;
+  }
+}

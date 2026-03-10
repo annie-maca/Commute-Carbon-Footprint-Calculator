@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commute Carbon Footprint</title>
+  <link rel="stylesheet" href="carbon.css">
+</head>
+<body>
+  <main class="carbon-container">
+    <header class="carbon-header">
+      <h1>Commute Carbon Calculator</h1>
+      <p class="subtitle">See how your daily travel impacts the planet</p>
+    </header>
+
+    <form id="carbonForm" class="carbon-form">
+      <!-- Transport Mode -->
+      <section class="form-section">
+        <h2>How do you commute?</h2>
+        <div class="mode-selector">
+          <label class="mode-option">
+            <input type="radio" name="mode" value="bus">
+            <span class="mode-card">
+              <span class="mode-icon">🚌</span>
+              <span class="mode-label">Bus</span>
+            </span>
+          </label>
+          <label class="mode-option">
+            <input type="radio" name="mode" value="self">
+            <span class="mode-card">
+              <span class="mode-icon">🚶</span>
+              <span class="mode-label">Walking / Biking</span>
+            </span>
+          </label>
+          <label class="mode-option">
+            <input type="radio" name="mode" value="car">
+            <span class="mode-card">
+              <span class="mode-icon">🚗</span>
+              <span class="mode-label">Car</span>
+            </span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Bus options (shown when bus selected) -->
+      <section class="form-section bus-options" id="busSection">
+        <h2>Bus details</h2>
+        <p class="hint">
+          Choose your bus type and how full it was. A fuller bus means emissions are shared—your individual
+          footprint drops.
+        </p>
+
+        <div class="bus-type-toggle">
+          <span class="bus-type-label">Bus type</span>
+          <div class="bus-type-options">
+            <label class="bus-type-option">
+              <input type="radio" name="busType" value="gasoline">
+              <span>Gasoline / Diesel</span>
+            </label>
+            <label class="bus-type-option">
+              <input type="radio" name="busType" value="electric">
+              <span>Electric</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="occupancy-buttons">
+          <label class="occupancy-btn"><input type="radio" name="occupancy" value="25">25%</label>
+          <label class="occupancy-btn"><input type="radio" name="occupancy" value="50">50%</label>
+          <label class="occupancy-btn"><input type="radio" name="occupancy" value="75">75%</label>
+          <label class="occupancy-btn"><input type="radio" name="occupancy" value="100">100%</label>
+        </div>
+      </section>
+
+      <!-- Self options (walk/bike - minimal) -->
+      <section class="form-section self-options" id="selfSection">
+        <h2>Self-powered commute</h2>
+        <p class="hint">Walking and biking produce negligible emissions. Great choice! 🌱</p>
+        <div class="self-options-grid">
+          <label class="self-option"><input type="radio" name="selfType" value="walk">🚶 Walking</label>
+          <label class="self-option"><input type="radio" name="selfType" value="bike">🚴 Biking</label>
+        </div>
+      </section>
+
+      <!-- Car options (shown when car selected) -->
+      <section class="form-section car-options" id="carSection">
+        <h2>What type of car?</h2>
+        <div class="car-buttons">
+          <label class="car-btn"><input type="radio" name="carType" value="sedan"><span>Sedan</span></label>
+          <label class="car-btn"><input type="radio" name="carType" value="suv"><span>SUV</span></label>
+          <label class="car-btn"><input type="radio" name="carType" value="truck"><span>Truck</span></label>
+          <label class="car-btn"><input type="radio" name="carType" value="hybrid"><span>Hybrid</span></label>
+        </div>
+      </section>
+
+      <!-- Distance -->
+      <section class="form-section">
+        <h2>Commute distance (one-way)</h2>
+        <div class="distance-control">
+          <div class="distance-row">
+            <input type="range" id="distanceSlider" min="1" max="50" value="10" step="1">
+            <output id="distanceValue">10</output>
+            <span class="distance-unit">miles</span>
+          </div>
+          <p class="hint">Round-trip total: <strong id="roundTrip">20</strong> miles</p>
+        </div>
+      </section>
+    </form>
+
+    <!-- Results -->
+    <section class="results-section" id="resultsSection">
+      <div class="emissions-display">
+        <div class="emissions-main">
+          <span class="emissions-value" id="emissionsValue">0.0</span>
+          <span class="emissions-unit">kg CO₂</span>
+        </div>
+        <p class="emissions-label">per one-way commute</p>
+      </div>
+      <div class="rating-display" id="ratingDisplay">
+        <span class="rating-badge" id="ratingBadge">—</span>
+        <p class="rating-desc" id="ratingDesc">Select your commute options above</p>
+      </div>
+      <div class="air-quality-section" id="airQualitySection">
+        <h3>Air quality impact</h3>
+        <p class="air-quality-context" id="airQualityContext">—</p>
+        <ul class="air-quality-details" id="airQualityDetails"></ul>
+      </div>
+      <div class="categories-breakdown" id="categoriesBreakdown">
+        <!-- Populated by JS -->
+      </div>
+    </section>
+
+    <section class="sources-section">
+      <button type="button" class="sources-toggle" id="sourcesToggle" aria-expanded="false">
+        <span>Data sources & references</span>
+        <span class="sources-toggle-icon">▼</span>
+      </button>
+      <div class="sources-content" id="sourcesContent" hidden>
+        <h3>Emissions data</h3>
+        <ul>
+          <li><strong>Vehicle CO₂ factors</strong> — U.S. EPA Automotive Trends, Fuel Economy Guide. Passenger cars (sedan), light trucks (SUV, pickup), and hybrids based on EPA-rated fleet averages. <a href="https://www.epa.gov/greenvehicles/greenhouse-gas-rating" target="_blank" rel="noopener">epa.gov/greenvehicles</a></li>
+          <li><strong>Transit bus CO₂</strong> — EPA GHG Emission Factors Hub; Federal Transit Administration reports. Per-passenger emissions vary with load; fuller buses yield lower emissions per rider. <a href="https://www.epa.gov/climateleadership/ghg-emission-factors-hub" target="_blank" rel="noopener">epa.gov/climateleadership</a></li>
+          <li><strong>Walking & biking</strong> — Negligible direct tailpipe emissions; based on EPA and transportation research convention.</li>
+        </ul>
+        <h3>Air quality & health</h3>
+        <ul>
+          <li><strong>NOₓ and ozone</strong> — EPA Integrated Science Assessment for Oxides of Nitrogen; nitrogen oxides contribute to ground-level ozone (smog) formation. <a href="https://www.epa.gov/air-research/research-health-effects-air-pollution" target="_blank" rel="noopener">epa.gov/air-research</a></li>
+          <li><strong>PM2.5 and health</strong> — EPA health and environmental effects of particulate matter; fine particles from tailpipes can penetrate lungs and affect respiratory and cardiovascular health. <a href="https://www.epa.gov/pm-pollution/health-and-environmental-effects-particulate-matter-pm" target="_blank" rel="noopener">epa.gov/pm-pollution</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <script src="carbon.js"></script>
+</body>
+</html>
